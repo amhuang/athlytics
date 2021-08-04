@@ -1,0 +1,2 @@
+brew install pygobject3 gtk+3
+brew install gstreamer
