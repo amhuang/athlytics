@@ -1,4 +1,7 @@
 const reader = new FileReader();
+
+// Sample data in lieu of being able to obtain metadata from running
+// the crossroads sample application
 const exampleData = `{
     "players": [ {
         "name": "player1",
@@ -22,11 +25,16 @@ const exampleData = `{
 
 const jsondata = JSON.parse(exampleData);
 
+// 
 $("#formVideo").on("input", function(e) {
     let vidPath = document.getElementById("formVideo").files[0].name;
-    $('#vid video source').attr('src', "{{ url_for('static', filename="+vidPath+")}}");
-    console.log($("#vid video source"));
-    document.getElementById("vid").load();
+    let srcpath = "<source src={{url_for(&quotstatic&quot, filename=&quot"+vidPath+"&quot)}} type=&quotvideo/mp4&quot></source>";
+    console.log(srcpath);
+    $("#vid").empty();
+    $("#vid").append(srcpath);
+    document.getElementById("vid").load(); 
+    console.log(document.getElementById("vid"));
+    
 });
 
 $("#formMeta").on("input", function(e) {
@@ -35,28 +43,33 @@ $("#formMeta").on("input", function(e) {
 
 $("#playerList").on("input", function(e) {
     
+    // get index of player name selected from options
+    // BUG: LIST ENTRIES CHANGE ONCE OPTION SELECTED
+    
     let playerNum;
     jsondata.players.forEach(function (x) {
         if (x.name == e.target.value) {
             playerNum = jsondata.players.indexOf(x);
+            console.log(playerNum);
             return;
         }
     });
     
     let duration = document.getElementById("vid").duration; // in seconds
+    // width of progress bar
     let barWidth = document.getElementById("progress").offsetWidth;
-    console.log("barwidth " + barWidth);
+    // padding on either side of prog bar
     let xPadding = (window.innerWidth - barWidth)/2;
-    console.log("xpadding " + xPadding);
 
+    // clear previous tags
     $("#tags").empty();
-    console.log(jsondata);
-    for (let i=0; i < jsondata.players[playerNum].sec.length; i++) {
-        console.log(playerNum)
-        console.log("duratioin div " + duration / jsondata.players[playerNum].sec[i] );
 
+    // Draw time tags on UI for each data point in the metadata
+    for (let i=0; i < jsondata.players[playerNum].sec.length; i++) {
+        
+        // Offset of point from the left edge of the window
         let xOffset = (jsondata.players[playerNum].sec[i] / duration)*barWidth + xPadding;
-        console.log("xoffset " + xOffset + " window " + window.innerWidth);
+        // Percentage of the screen left of the tag
         let percentOff = Math.round((xOffset / window.innerWidth) * 100);
         console.log("percentOff " + percentOff);
 
