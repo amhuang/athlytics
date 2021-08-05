@@ -1,30 +1,24 @@
 /*
 VIDEO PLAYER AND OPERATION
 
-Provides basic functionality for video player, including scrubbing, play/pause, full screen. Also displays height as a function of time.
+Provides basic functionality for video player with scrubbing, seeking, and a play/pause button.
 */
 
 var player = function() {
 
     let DOM = {};
-    let whichVid,
-        duration,   // in sec
+    let duration,   // in sec
         skipTo,
-        currTime,
-        source,
-        maxedVid;   // which video is fullscreen (starting at 1)
+        currTime; 
 
     /* ----- INITIALIZING FUNCTIONS ----- */
 
     function cache() {
         DOM.vid = document.querySelector("video");
 
-        // containers for all small videos and full screen video
-
         // Buttons
         DOM.icons = $('.playback-icons use');
         DOM.play = $('#play');
-        // DOM.cameras = $('.nav-container button');
         DOM.maximize = $('.fullscreen');
 
         // Progress bar items
@@ -71,7 +65,7 @@ var player = function() {
     /* ----- EVENT HANDLERS ----- */
 
     /*
-    Toggles video playing in every video syncronously
+    Toggles between play/pause
     */
     function togglePlay() {
         DOM.icons.toggleClass("hidden");
@@ -86,8 +80,7 @@ var player = function() {
     }
 
     /*
-    Updates the time and height displayed on the UI. Entries from height are
-    taken 0.5 sec apart and are lined up with currTime of the videos
+    Updates the time and displayed on the UI
     */
     function updateTime() {
 
@@ -115,7 +108,6 @@ var player = function() {
 
         DOM.seekDiv.show();
         DOM.seekDiv.html(formatted);
-        // DOM.seekDiv.css('left', `${event.pageX - rect.left}px`);
         DOM.seekDiv.css('left', `${e.pageX}px`);
     }
 

@@ -1,7 +1,10 @@
 
-INPUT=practice.mp4
-MODEL1=person-detection-retail-0013
+INSTALLDIR="/opt/intel/openvino_2021"
+INTEL_OPENVINO_DIR="$INSTALLDIR"
+INTEL_CVSDK_DIR="$INTEL_OPENVINO_DIR"
+MODEL_PATH="$intel"
 
+INPUT=practice.mp4
 
 # MODEL_PATH=intel/person-detection-retail-0013/FP32/person-detection-retail-0013.xml
 MODEL_PATH=intel/person-vehicle-bike-detection-crossroad-0078/FP32/person-vehicle-bike-detection-crossroad-0078.xml
