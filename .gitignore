@@ -1,3 +1,8 @@
 
 .DS_Store
 *.mp4
+*.pyc
+*.MOV
+*.bin
+*.xml
+model_proc/person-vehicle-bike-detection-crossroad-0078.json
